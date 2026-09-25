@@ -10,7 +10,6 @@
   "devDependencies": {
     "@earendil-works/pi-coding-agent": "^0.75.3"
   },
-  "description": "NanoGPT provider extension for Pi coding agent — dynamic model discovery with reasoning, pricing, and modality metadata",
   "author": "belovedEmperor",
   "keywords": [
     "pi-package",

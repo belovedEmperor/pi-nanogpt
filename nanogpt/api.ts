@@ -6,13 +6,16 @@ async function fetchJson(url: string, apiKey: string) {
   return Array.isArray(data) ? data : (data?.data ?? []);
 }
 
-function mapModels(list: any[]) {
-  return list.map((m: any) => {
+function mapModels(list: any[], subOnly = false) {
+  return list
+    .filter((m: any) => !subOnly || m.subscription?.included === true)
+    .map((m: any) => {
     const isThinkingVariant = m.id.includes(":thinking");
     const efforts = (m.reasoning_efforts ?? []) as string[];
+    const sub = m.subscription?.included === true;
     const model: any = {
       id: m.id,
-      name: m.name ? (m.subscription?.included === false ? `${m.name} [paid]` : m.name) : m.id,
+      name: m.name ? (sub ? `${m.name} [sub]` : m.name) : m.id,
       reasoning: m.capabilities?.reasoning ?? (m.id.includes("r1") || isThinkingVariant),
       input: (m.architecture?.input_modalities ?? ["text"]).includes("image")
         ? (["text", "image"] as ("text" | "image")[])
@@ -50,6 +53,7 @@ export async function fetchSubscriptionModels(apiKey: string, baseUrl: string = 
 }
 
 export async function fetchModels(apiKey: string, baseUrl: string = process.env.OPENAI_BASE_URL || "https://nano-gpt.com/api/v1") {
+  const subOnly = !!process.env.NANOGPT_SUBSCRIPTION_ONLY;
   if (baseUrl === "https://nano-gpt.com/api/v1") {
     const defaultBase = "https://nano-gpt.com";
     const [allModels, subModels] = await Promise.all([
@@ -65,11 +69,11 @@ export async function fetchModels(apiKey: string, baseUrl: string = process.env.
       }
     }
 
-    return mapModels(merged);
+    return mapModels(merged, subOnly);
   } else {
     // Custom proxy (Headroom, LiteLLM, etc.)
     const models = await fetchJson(`${baseUrl}/models?detailed=true`, apiKey);
-    return mapModels(models);
+    return mapModels(models, subOnly);
   }
 }
 
