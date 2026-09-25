@@ -17,14 +17,16 @@ This extension wires NanoGPT into Pi as a first-class provider, with **automatic
 - 🔑 **Simple API key auth** — login directly inside Pi, no environment variables needed
 - 🤖 **Dynamic model list** — fetched live from NanoGPT
 - ⚡ **OpenAI-compatible** — works seamlessly with Pi's standard completions pipeline
-- 🔁 **Reasoning model support** — auto-detects R1/thinking models and flags them correctly
+- 🔁 **Reasoning model support** — flags all reasoning-capable models (not just `:thinking`), maps thinking levels (`off/low/high/max`) from the provider's declared reasoning efforts
+- 💰 **Rich metadata** — real pricing, context windows, max output, image-input flags
+- 🏷️ **Subscription markers** — subscription-included models show a " [sub]" suffix; set the `NANOGPT_SUBSCRIPTION_ONLY` environment variable to register only subscription-included models
 
 ---
 
 ## Install
 
 ```bash
-pi install git:github.com/GCaringi/pi-nanogpt
+pi install npm:pi-nanogpt
 ```
 
 ---
