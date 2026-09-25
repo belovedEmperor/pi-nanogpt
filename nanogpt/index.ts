@@ -14,7 +14,6 @@ export default async function (pi: ExtensionAPI) {
     if (apiKey) {
       try {
         models = await fetchModels(apiKey, baseUrl);
-        console.log(`[nanogpt] loaded ${models.length} models`);
       } catch (e) {
         console.error("[nanogpt] fetch models failed, using fallback:", e);
       }

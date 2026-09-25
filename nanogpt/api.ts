@@ -12,7 +12,7 @@ function mapModels(list: any[]) {
     const efforts = (m.reasoning_efforts ?? []) as string[];
     const model: any = {
       id: m.id,
-      name: m.name ?? m.id,
+      name: m.name ? (m.subscription?.included === false ? `${m.name} [paid]` : m.name) : m.id,
       reasoning: m.capabilities?.reasoning ?? (m.id.includes("r1") || isThinkingVariant),
       input: (m.architecture?.input_modalities ?? ["text"]).includes("image")
         ? (["text", "image"] as ("text" | "image")[])

@@ -1,7 +1,7 @@
 {
   "name": "pi-nanogpt",
-  "version": "1.0.0",
-  "description": "NanoGPT provider extension for Pi coding agent",
+  "version": "1.0.1",
+  "description": "NanoGPT provider extension for Pi coding agent — dynamic model discovery with reasoning, pricing, and modality metadata",
   "pi": {
     "extensions": [
       "nanogpt/index.ts"
