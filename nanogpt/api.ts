@@ -34,8 +34,9 @@ function mapModels(list: any[], subOnly = false) {
       for (const lvl of ["minimal", "low", "medium", "high", "xhigh", "max"]) {
         map[lvl] = efforts.includes(lvl) ? lvl : null;
       }
-      // nanogpt: reasoning_effort "none" disables reasoning; :thinking variants can't disable
-      map.off = isThinkingVariant ? null : "none";
+      // nanogpt: reasoning_effort "none" disables reasoning, but only when the
+      // model advertises it. GLM 5.3-style models always think and 400 on "none".
+      map.off = efforts.includes("none") ? "none" : null;
       model.thinkingLevelMap = map;
     }
     return model;
